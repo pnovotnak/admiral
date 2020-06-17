@@ -25,6 +25,8 @@ func GetRootCmd(args []string) *cobra.Command {
 
 	params := common.AdmiralParams{LabelSet: &common.LabelSet{}}
 
+	log.SetLevel(log.InfoLevel)
+
 	rootCmd := &cobra.Command{
 		Use:          "Admiral",
 		Short:        "Admiral is a control plane of control planes",

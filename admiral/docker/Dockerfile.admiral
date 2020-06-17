@@ -5,7 +5,9 @@ RUN apt update -y
 RUN apt install -y curl
 
 COPY ./out/admiral /usr/local/admiral
+COPY ./out/dlv /usr/local/dlv
 
 RUN chmod +x /usr/local/admiral
+RUN chmod +x /usr/local/dlv
 
-ENTRYPOINT ["/usr/local/admiral"]
+ENTRYPOINT ["/usr/local/dlv", "exec", "/usr/local/admiral", "--"]

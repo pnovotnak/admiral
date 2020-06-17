@@ -7,6 +7,7 @@ require (
 	github.com/argoproj/argo-rollouts v0.7.2
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/emicklei/go-restful v2.11.2+incompatible // indirect
+	github.com/go-delve/delve v1.4.1 // indirect
 	github.com/go-openapi/spec v0.19.6 // indirect
 	github.com/go-openapi/swag v0.19.7 // indirect
 	github.com/gogo/googleapis v1.1.0 // indirect
@@ -18,14 +19,13 @@ require (
 	github.com/gregjones/httpcache v0.0.0-20190212212710-3befbb6ad0cc // indirect
 	github.com/hashicorp/go-multierror v1.0.0 // indirect
 	github.com/imdario/mergo v0.3.8 // indirect
-	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/lyft/protoc-gen-validate v0.0.13 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/natefinch/lumberjack v0.0.0-20170531160350-a96e63847dc3 // indirect
 	github.com/onsi/ginkgo v1.10.2 // indirect
 	github.com/onsi/gomega v1.7.0
 	github.com/prometheus/common v0.7.0
-	github.com/sirupsen/logrus v1.4.2
+	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/cobra v0.0.5
 	github.com/yl2chen/cidranger v0.0.0-20180214081945-928b519e5268 // indirect
 	go.uber.org/atomic v1.3.2 // indirect

@@ -84,26 +84,39 @@ func (s *serviceCache) Delete(pod *ServiceClusterEntry) {
 	delete(s.cache, pod.Identity)
 }
 
-func (s *serviceCache) GetLoadBalancer(key string, namespace string) string {
+func (s *serviceCache) GetLoadBalancer(key string, namespace string) (string, int) {
 
-	var lb = "admiral_dummy.com"
+	var (
+		lb = "admiral_dummy.com"
+		lbPort = common.DefaultMtlsPort
+	)
 	service := s.Get(namespace)
 	if service == nil || service.Service[namespace] == nil {
-		return lb
+		return lb, 0
 	}
+Services:
 	for _, service := range service.Service[namespace] {
 		if service.Labels["app"] == key {
 			loadBalancerStatus := service.Status.LoadBalancer.Ingress
 			if len(loadBalancerStatus) > 0 {
 				if len(loadBalancerStatus[0].Hostname) > 0 {
-					return loadBalancerStatus[0].Hostname
+					return loadBalancerStatus[0].Hostname, common.DefaultMtlsPort
 				} else {
-					return loadBalancerStatus[0].IP
+					return loadBalancerStatus[0].IP, common.DefaultMtlsPort
+				}
+			} else if len(service.Spec.ExternalIPs) > 0 {
+				// Just grab the first one
+				lb = service.Spec.ExternalIPs[0]
+				for _, port := range service.Spec.Ports {
+					if port.Port == common.DefaultMtlsPort {
+						lbPort = int(port.NodePort)
+						break Services
+					}
 				}
 			}
 		}
 	}
-	return lb
+	return lb, lbPort
 
 }
 

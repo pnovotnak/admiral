@@ -61,6 +61,7 @@ func GetDeploymentGlobalIdentifier(deployment *k8sAppsV1.Deployment) string {
 		//TODO can this be removed now? This was for backward compatibility
 		identity = deployment.Spec.Template.Annotations[GetWorkloadIdentifier()]
 	}
+	log.Infof("%v has identity map: %v\n", deployment.Name, identity)
 	return identity
 }
 

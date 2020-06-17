@@ -1,6 +1,6 @@
-DOCKER_REPO=admiralproj
-IMAGE=$(DOCKER_REPO)/admiral
-DOCKER_USER=aattuluri
+DOCKER_REPO?=admiralproj
+IMAGE?=$(DOCKER_REPO)/admiral
+DOCKER_USER?=aattuluri
 
 SHELL := /bin/bash
 # Go parameters
@@ -13,6 +13,7 @@ GOBIN=$(GOPATH)/bin
 OUT=./out/
 
 BINARY_NAME=$(OUT)admiral
+DLV_BINARY_NAME=$(OUT)dlv
 BINARY_DARWIN=$(BINARY_NAME)_darwin
 
 #Protoc
@@ -76,6 +77,7 @@ crd-gen:
 # Cross compilation
 build-linux:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BINARY_NAME) -v $(MAIN_PATH_ADMIRAL)
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(DLV_BINARY_NAME) github.com/go-delve/delve/cmd/dlv
 
 #set tag to `latest` if master branch and TAG is not set
 #set tag to commit sha if TAG is not set and is not master branch
@@ -125,7 +127,7 @@ download-kustomize:
 	mv kustomize_kustomize.*_$(OPSYS)_amd64 kustomize
 	chmod u+x kustomize
 
-gen-yaml: 
+gen-yaml:
 	mkdir -p ./out/yaml
 	mkdir -p ./out/scripts
 	kustomize build ./install/admiral/overlays/demosinglecluster/ > ./out/yaml/demosinglecluster.yaml
