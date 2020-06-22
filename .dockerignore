@@ -1,4 +1,5 @@
 */**
 !admiral/
-!Makefile
 !go.*
+!Makefile
+!vendor/
