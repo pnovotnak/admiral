@@ -1,0 +1,21 @@
+FROM golang:1.14 AS builder
+
+RUN set -ex; \
+  go get github.com/go-delve/delve/cmd/dlv
+
+COPY go.mod /go/src/github.com/istio-ecosystem/admiral/go.mod
+COPY go.sum /go/src/github.com/istio-ecosystem/admiral/go.sum
+
+WORKDIR /go/src/github.com/istio-ecosystem/admiral
+RUN set -ex; \
+  go mod vendor
+
+COPY . /go/src/github.com/istio-ecosystem/admiral
+
+RUN set -ex; \
+  OUT=/go/bin/ GOBUILD='go build -gcflags "all=-N -l"' make build-linux; \
+  ln -s /go/bin/admiral /usr/local/bin/admiral; \
+  ln -s /go/bin/admiral /usr/local/bin/dlv
+
+ENTRYPOINT ["dlv", "exec", "--headless", "--listen=:2345", "--api-version=2", "--accept-multiclient", "admiral", "--"]
+

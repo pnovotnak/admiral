@@ -1,0 +1,2 @@
+# Copy this file to Tiltfile.local, update the line below and uncomment
+#default_registry('docker.io/myuser')

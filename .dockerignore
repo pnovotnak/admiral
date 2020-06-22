@@ -1,0 +1,4 @@
+*/**
+!admiral/
+!Makefile
+!go.*
